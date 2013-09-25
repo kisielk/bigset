@@ -5,7 +5,7 @@ import (
 )
 
 func TestInsert(t *testing.T) {
-	s := NewSet()
+	s := New()
 	if s.Contains(0) {
 		t.Fatal("set should not contain 0")
 	}
@@ -39,8 +39,8 @@ func TestInsert(t *testing.T) {
 }
 
 func TestUnion(t *testing.T) {
-	a := NewSet(1, 2, 3)
-	b := NewSet(3, 4, 5)
+	a := New(1, 2, 3)
+	b := New(3, 4, 5)
 	c := a.Union(b)
 	if l := c.Len(); l != 5 {
 		t.Fatalf("Len(): got %d, want %d", l, 5)
@@ -54,8 +54,8 @@ func TestUnion(t *testing.T) {
 }
 
 func TestIntersection(t *testing.T) {
-	a := NewSet(1, 2, 3, 4)
-	b := NewSet(3, 4, 5)
+	a := New(1, 2, 3, 4)
+	b := New(3, 4, 5)
 	c := a.Intersection(b)
 	if l := c.Len(); l != 2 {
 		t.Fatalf("Len(): got %d, want %d", l, 2)
@@ -69,8 +69,8 @@ func TestIntersection(t *testing.T) {
 }
 
 func TestDifference(t *testing.T) {
-	a := NewSet(1, 2, 3, 4)
-	b := NewSet(1, 2)
+	a := New(1, 2, 3, 4)
+	b := New(1, 2)
 	c := a.Difference(b)
 	if l := c.Len(); l != 2 {
 		t.Fatalf("Len(): got %d, want %d", l, 2)
@@ -84,8 +84,8 @@ func TestDifference(t *testing.T) {
 }
 
 func TestSymmetricDifference(t *testing.T) {
-	a := NewSet(1, 2, 3, 4)
-	b := NewSet(1, 4, 5)
+	a := New(1, 2, 3, 4)
+	b := New(1, 4, 5)
 	c := a.SymmetricDifference(b)
 	if l := c.Len(); l != 3 {
 		t.Fatalf("Len(): got %d, want %d", l, 3)
