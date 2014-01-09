@@ -1,5 +1,8 @@
 // Package bigset implements a set type for storing non-negative integers
 // using the Go standard library's math/big package.
+//
+// Most of the set operations return a *Set much like the operations in
+// math/big return a *big.Int.
 package bigset
 
 import (
@@ -25,7 +28,7 @@ func (s *Set) setBits(b uint, bits ...int) *Set {
 	return s
 }
 
-// New constructs a new set with each of the elements n.
+// Insert inserts each of the elements n in to the set.
 // Each n must be >= 0.
 func (s *Set) Insert(n ...int) *Set {
 	return s.setBits(1, n...)
@@ -114,4 +117,14 @@ func SymmetricDifference(s, t *Set) *Set {
 // SymmetricDifference updates s to be the result of s ∆ t.
 func (s *Set) SymmetricDifference(t *Set) *Set {
 	return symmetricDifference(s, s, t)
+}
+
+// IsSubset returns true if s is a subset of t.
+func (s *Set) IsSubset(t *Set) bool {
+	return Intersection(s, t).Len() == s.Len()
+}
+
+// IsSuperset returns true if s is a superset of t.
+func (s *Set) IsSuperset(t *Set) bool {
+	return Intersection(s, t).Len() == t.Len()
 }
