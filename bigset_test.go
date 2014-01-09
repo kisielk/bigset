@@ -1,6 +1,7 @@
 package bigset
 
 import (
+	"math/rand"
 	"testing"
 )
 
@@ -124,5 +125,113 @@ func TestSuperSubSet(t *testing.T) {
 		if isSub := test.b.IsSubset(test.a); isSub != test.isSuper {
 			t.Errorf("%d: IsSubset got %v, want %v", n, isSub, test.isSuper)
 		}
+	}
+}
+
+func BenchmarkIntersection10000_1000(b *testing.B)    { benchmarkIntersection(b, 10000, 1000) }
+func BenchmarkIntersection100000_1000(b *testing.B)   { benchmarkIntersection(b, 100000, 1000) }
+func BenchmarkIntersection1000000_1000(b *testing.B)  { benchmarkIntersection(b, 1000000, 1000) }
+func BenchmarkIntersection10000000_1000(b *testing.B) { benchmarkIntersection(b, 10000000, 1000) }
+
+func BenchmarkIntersection10000_10000(b *testing.B)    { benchmarkIntersection(b, 10000, 10000) }
+func BenchmarkIntersection100000_10000(b *testing.B)   { benchmarkIntersection(b, 100000, 10000) }
+func BenchmarkIntersection1000000_10000(b *testing.B)  { benchmarkIntersection(b, 1000000, 10000) }
+func BenchmarkIntersection10000000_10000(b *testing.B) { benchmarkIntersection(b, 10000000, 10000) }
+
+func benchmarkIntersection(b *testing.B, max, nNumbers int) {
+	setA := New()
+	setB := New()
+	for i := 0; i < nNumbers; i++ {
+		setA.Insert(rand.Intn(max))
+		setB.Insert(rand.Intn(max))
+	}
+	b.ResetTimer()
+	for i := 0; i < b.N; i++ {
+		setA.Intersection(setB)
+	}
+}
+
+func BenchmarkUnion10000_1000(b *testing.B)    { benchmarkUnion(b, 10000, 1000) }
+func BenchmarkUnion100000_1000(b *testing.B)   { benchmarkUnion(b, 100000, 1000) }
+func BenchmarkUnion1000000_1000(b *testing.B)  { benchmarkUnion(b, 1000000, 1000) }
+func BenchmarkUnion10000000_1000(b *testing.B) { benchmarkUnion(b, 10000000, 1000) }
+
+func BenchmarkUnion10000_10000(b *testing.B)    { benchmarkUnion(b, 10000, 10000) }
+func BenchmarkUnion100000_10000(b *testing.B)   { benchmarkUnion(b, 100000, 10000) }
+func BenchmarkUnion1000000_10000(b *testing.B)  { benchmarkUnion(b, 1000000, 10000) }
+func BenchmarkUnion10000000_10000(b *testing.B) { benchmarkUnion(b, 10000000, 10000) }
+
+func benchmarkUnion(b *testing.B, max, nNumbers int) {
+	setA := New()
+	setB := New()
+	for i := 0; i < nNumbers; i++ {
+		setA.Insert(rand.Intn(max))
+		setB.Insert(rand.Intn(max))
+	}
+	b.ResetTimer()
+	for i := 0; i < b.N; i++ {
+		setA.Union(setB)
+	}
+}
+
+func BenchmarkDifference10000_1000(b *testing.B)    { benchmarkDifference(b, 10000, 1000) }
+func BenchmarkDifference100000_1000(b *testing.B)   { benchmarkDifference(b, 100000, 1000) }
+func BenchmarkDifference1000000_1000(b *testing.B)  { benchmarkDifference(b, 1000000, 1000) }
+func BenchmarkDifference10000000_1000(b *testing.B) { benchmarkDifference(b, 10000000, 1000) }
+
+func BenchmarkDifference10000_10000(b *testing.B)    { benchmarkDifference(b, 10000, 10000) }
+func BenchmarkDifference100000_10000(b *testing.B)   { benchmarkDifference(b, 100000, 10000) }
+func BenchmarkDifference1000000_10000(b *testing.B)  { benchmarkDifference(b, 1000000, 10000) }
+func BenchmarkDifference10000000_10000(b *testing.B) { benchmarkDifference(b, 10000000, 10000) }
+
+func benchmarkDifference(b *testing.B, max, nNumbers int) {
+	setA := New()
+	setB := New()
+	for i := 0; i < nNumbers; i++ {
+		setA.Insert(rand.Intn(max))
+		setB.Insert(rand.Intn(max))
+	}
+	b.ResetTimer()
+	for i := 0; i < b.N; i++ {
+		setA.Difference(setB)
+	}
+}
+
+func BenchmarkSymmetricDifference10000_1000(b *testing.B) {
+	benchmarkSymmetricDifference(b, 10000, 1000)
+}
+func BenchmarkSymmetricDifference100000_1000(b *testing.B) {
+	benchmarkSymmetricDifference(b, 100000, 1000)
+}
+func BenchmarkSymmetricDifference1000000_1000(b *testing.B) {
+	benchmarkSymmetricDifference(b, 1000000, 1000)
+}
+func BenchmarkSymmetricDifference10000000_1000(b *testing.B) {
+	benchmarkSymmetricDifference(b, 10000000, 1000)
+}
+
+func BenchmarkSymmetricDifference10000_10000(b *testing.B) {
+	benchmarkSymmetricDifference(b, 10000, 10000)
+}
+func BenchmarkSymmetricDifference100000_10000(b *testing.B) {
+	benchmarkSymmetricDifference(b, 100000, 10000)
+}
+func BenchmarkSymmetricDifference1000000_10000(b *testing.B) {
+	benchmarkSymmetricDifference(b, 1000000, 10000)
+}
+func BenchmarkSymmetricDifference10000000_10000(b *testing.B) {
+	benchmarkSymmetricDifference(b, 10000000, 10000)
+}
+
+func benchmarkSymmetricDifference(b *testing.B, max, nNumbers int) {
+	setA := New()
+	setB := New()
+	for i := 0; i < nNumbers; i++ {
+		setA.Insert(rand.Intn(max))
+		setB.Insert(rand.Intn(max))
+	}
+	b.ResetTimer()
+	for i := 0; i < b.N; i++ {
+		setA.SymmetricDifference(setB)
 	}
 }
